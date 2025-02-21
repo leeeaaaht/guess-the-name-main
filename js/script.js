@@ -33,25 +33,62 @@ button.addEventListener("click", function (e){
     letterInput.value = "";
 });
 
-const playerInput = function(input){
+const playerInput = function (input) {
     const acceptedLetter = /[a-zA-Z]/;
-    if(input.length === 0){
+    if(input.length === 0) {
         message.innerText = 'Enter a letter.';
-    } else if(input.length > 1){
+    } else if(input.length > 1) {
         message.innerText = 'You need at least one letter.';
-    } else if (!input.match(acceptedLetter)){
+    } else if (input.match(acceptedLetter)) {
      message.innerText = 'Enter a letter from A to Z.';
     } else{
         return input;
     }
 };
 
-const makeGuess = function(guess){
+const makeGuess = function (guess) {
     guess = guess.toUpperCase();
-    if(guessedLetters.includes(guess)){
+    if(guessedLetters.includes(guess)) {
         message.innerText = 'You chose that letter already,try again!'
-    } else{
+    } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
+        playersGuesses();
+        newWordInProgress(guessedLetters);
     }
 };
+
+const playersGuesses = function(){
+    guess.innerHTML = "";
+    for(const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guess.append(li);
+    }
+    
+};
+
+const newWordInProgress = function(guessedLetters) {
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
+  console.log(wordArray);
+  const showWord = [];
+  for(letter of wordArray) {
+    if(guessedLetters.includes(letter)) {
+        showWord.push(letter.toUpperCase());
+    } else {
+        showWord.push("●");
+    }
+  }
+  console.log(showWord);
+wordProgress.innerText = showWord.join("");
+didYouWin();
+};
+
+const didYouWin = function() {
+if (word.toUpperCase()===wordProgress.innerText) {
+    message.classList.add("win");
+    message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>.';
+}
+};
+
