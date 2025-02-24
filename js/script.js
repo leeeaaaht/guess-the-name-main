@@ -125,4 +125,25 @@ if (word.toUpperCase()===wordProgress.innerText) {
 }
 };
 
+startOver = function(){
+    button.classList.add("hide");
+    remaining.classList.add("hide");
+    guess.classList.add("hide");
+    hiddenButton.classList.remove("hide");
+    console.log(startOver);
+};
 
+hiddenButton.addEventListener("click", function(){
+    message.classList.remove("win");
+    guess = [];
+    remainingGuesses = 8;
+    span.innerText = `${remainingGuesses} guesses.`;
+    remaining.innerHTML = "";
+    message.innerText = "";
+    getWord();
+});
+
+button.classList.remove("hide");
+remaining.classList.add("hide");
+hiddenButton.classList.remove("hide");
+guess.classList.remove("hide");
